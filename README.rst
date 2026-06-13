@@ -1,10 +1,14 @@
-# HR Hospital
+HR Hospital
+===========
 
 HR Hospital is an educational Odoo module for managing hospital-related data.
 
-The module allows users to manage patients, doctors, doctor categories, diseases, appointments, personal doctor history, reports, access rights, translations, and basic medical workflows.
+The module allows users to manage patients, doctors, doctor categories, diseases,
+appointments, personal doctor history, reports, access rights, translations, and
+basic medical workflows.
 
-## Features
+Features
+--------
 
 * Manage patients with personal, contact, and medical information.
 * Manage doctors with specialties, categories, mentors, and interns.
@@ -21,7 +25,8 @@ The module allows users to manage patients, doctors, doctor categories, diseases
 * Provide Ukrainian translation for the module and disease classifier.
 * Include automated model tests.
 
-## Security Groups
+Security Groups
+---------------
 
 The module provides the following user groups:
 
@@ -39,14 +44,16 @@ Doctors can view and edit their own visits and visits of their interns.
 Managers can view all visits.
 Administrators can delete any data in the module.
 
-## Technical Information
+Technical Information
+---------------------
 
-Module name: `hr_hospital`
+Module name: ``hr_hospital``
 
-Odoo version: `19.0`
+Odoo version: ``19.0``
 
-License: `OPL-1`
+License: ``OPL-1``
 
-## Author
+Author
+------
 
 Ivan Kokhanovskyi

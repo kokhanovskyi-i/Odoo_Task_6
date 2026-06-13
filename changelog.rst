@@ -1,12 +1,13 @@
-# Changelog
+Changelog
+=========
 
-## 19.0.1.0.0
+19.0.1.0.0
+----------
 
 Initial educational version of the HR Hospital module.
 
 Added
-
-```
+~~~~~
 
 * Patient management.
 * Doctor management.
@@ -23,4 +24,3 @@ Added
 * Ukrainian translation.
 * Automated model tests.
 * Static module description page.
-```
