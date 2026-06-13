@@ -84,9 +84,12 @@ class HrHospitalAppointment(models.Model):
         return super().write(vals)
 
     def unlink(self):
-        finished_appointments = self.filtered(lambda appointment: appointment.status == 'done')
+        if self.env.user.has_group("hr_hospital.group_hr_hospital_admin"):
+            return super().unlink()
+
+        finished_appointments = self.filtered(lambda appointment: appointment.status == "done")
         if finished_appointments:
-            raise UserError('You cannot delete completed visits.')
+            raise UserError("You cannot delete completed visits.")
 
         return super().unlink()
 

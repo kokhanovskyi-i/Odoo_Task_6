@@ -10,7 +10,9 @@
         "base",
     ],
     "data": [
+        "security/hr_hospital_groups.xml",
         "security/ir.model.access.csv",
+        "security/hr_hospital_security_rules.xml",
         "data/disease_data.xml",
         "data/doctor_category_data.xml",
         "views/hr_hospital_appointment_views.xml",
