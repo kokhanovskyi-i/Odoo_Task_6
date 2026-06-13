@@ -7,6 +7,8 @@ _logger = logging.getLogger(__name__)
 
 
 class HrHospitalDisease(models.Model):
+    """Keep diseases in a simple parent and child structure."""
+
     _name = 'hr.hospital.disease'
     _description = 'Disease'
     _parent_name = 'parent_id'
@@ -48,16 +50,19 @@ class HrHospitalDisease(models.Model):
 
     @api.constrains('parent_id')
     def _check_parent_id(self):
+        """Check that disease hierarchy has no recursion."""
         for disease in self:
             if disease._has_cycle():
                 raise ValidationError(_('Disease hierarchy cannot be recursive.'))
 
     @api.depends('name', 'parent_id.display_name')
     def _compute_display_name(self):
+        """Set full name for disease with parent names."""
         for disease in self:
             disease.display_name = disease._get_complete_name()
 
     def _get_complete_name(self):
+        """Return disease name together with its parents."""
         self.ensure_one()
 
         names = []

@@ -3,7 +3,10 @@ from odoo.tests.common import TransactionCase
 
 
 class TestHrHospitalModels(TransactionCase):
+    """Tests for main hospital model methods."""
+
     def setUp(self):
+        """Prepare records used in tests."""
         super().setUp()
 
         self.Doctor = self.env['hr.hospital.doctor']
@@ -15,6 +18,7 @@ class TestHrHospitalModels(TransactionCase):
         self.specialist_category = self.env.ref('hr_hospital.doctor_category_specialist')
 
     def _create_doctor(self, name, category):
+        """Create doctor for test cases."""
         return self.Doctor.create(
             {
                 'name': name,
@@ -26,6 +30,7 @@ class TestHrHospitalModels(TransactionCase):
         )
 
     def _create_patient(self, name):
+        """Create patient for test cases."""
         return self.Patient.create(
             {
                 'name': name,
@@ -35,6 +40,7 @@ class TestHrHospitalModels(TransactionCase):
         )
 
     def test_disease_complete_name_contains_parent_names(self):
+        """Check disease full name with parent."""
         parent_disease = self.Disease.create(
             {
                 'code': 'TEST-PARENT',
@@ -55,6 +61,7 @@ class TestHrHospitalModels(TransactionCase):
         )
 
     def test_disease_parent_cannot_be_recursive(self):
+        """Check that disease recursion is not allowed."""
         parent_disease = self.Disease.create(
             {
                 'code': 'TEST-RECURSIVE-PARENT',
@@ -73,6 +80,7 @@ class TestHrHospitalModels(TransactionCase):
             parent_disease.write({'parent_id': child_disease.id})
 
     def test_doctor_is_intern_depends_on_category(self):
+        """Check intern flag from doctor category."""
         intern_doctor = self._create_doctor('Test Intern Doctor', self.intern_category)
         specialist_doctor = self._create_doctor(
             'Test Specialist Doctor',
@@ -83,6 +91,7 @@ class TestHrHospitalModels(TransactionCase):
         self.assertFalse(specialist_doctor.is_intern)
 
     def test_intern_cannot_be_mentor(self):
+        """Check that intern cannot be mentor."""
         intern_doctor = self._create_doctor(
             'Test Mentor Intern Doctor',
             self.intern_category,
@@ -101,6 +110,7 @@ class TestHrHospitalModels(TransactionCase):
             )
 
     def test_same_disease_visit_count(self):
+        """Check counter of visits with same disease."""
         doctor = self._create_doctor(
             'Test Appointment Doctor',
             self.specialist_category,

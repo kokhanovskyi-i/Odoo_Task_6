@@ -7,6 +7,8 @@ _logger = logging.getLogger(__name__)
 
 
 class HrHospitalDoctor(models.Model):
+    """Keep doctor data, category, mentor and interns."""
+
     _name = 'hr.hospital.doctor'
     _description = 'Hospital doctor'
     _inherit = ['hospital.medic.info']
@@ -74,6 +76,7 @@ class HrHospitalDoctor(models.Model):
 
     @api.depends('category_id')
     def _compute_is_intern(self):
+        """Set intern flag by doctor category."""
         intern_category = self.env.ref(
             'hr_hospital.doctor_category_intern',
             raise_if_not_found=False,
@@ -84,11 +87,13 @@ class HrHospitalDoctor(models.Model):
 
     @api.constrains('mentor_id')
     def _check_mentor_is_not_intern(self):
+        """Do not allow intern doctor as mentor."""
         for doctor in self:
             if doctor.mentor_id and doctor.mentor_id.is_intern:
                 raise ValidationError(_('Mentor cannot be an intern.'))
 
     def action_create_appointment(self):
+        """Open new visit form with this doctor already filled."""
         self.ensure_one()
 
         return {
@@ -105,6 +110,7 @@ class HrHospitalDoctor(models.Model):
         }
 
     def _get_report_appointments(self):
+        """Return doctor visits from newest to oldest."""
         self.ensure_one()
 
         return self.env['hr.hospital.appointment'].search(
@@ -113,6 +119,7 @@ class HrHospitalDoctor(models.Model):
         )
 
     def _get_report_patients(self):
+        """Return patients of this doctor for PDF report."""
         self.ensure_one()
 
         appointment_patients = self._get_report_appointments().mapped('patient_id')
@@ -125,10 +132,12 @@ class HrHospitalDoctor(models.Model):
         return (appointment_patients | personal_patients).sorted('name')
 
     def _get_appointment_status_label(self, status):
+        """Return status label for visit status value."""
         status_labels = dict(self.env['hr.hospital.appointment']._fields['status'].selection)
         return status_labels.get(status, status)
 
     def _get_appointment_status_style(self, status):
+        """Return simple style for status in report."""
         status_styles = {
             'planned': 'background-color: #fff3cd; color: #856404; font-weight: bold;',
             'done': 'background-color: #d4edda; color: #155724; font-weight: bold;',
@@ -138,5 +147,6 @@ class HrHospitalDoctor(models.Model):
 
     @api.depends('intern_ids.name')
     def _compute_intern_names(self):
+        """Make intern names text for kanban card."""
         for doctor in self:
             doctor.intern_names = ', '.join(doctor.intern_ids.mapped('name'))

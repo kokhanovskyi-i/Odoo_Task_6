@@ -2,6 +2,8 @@ from odoo import fields, models
 
 
 class HospitalDoctorCategory(models.Model):
+    """Keep doctor categories and their order."""
+
     _name = 'hospital.doctor.category'
     _description = 'Doctor category'
     _order = 'sequence, name'

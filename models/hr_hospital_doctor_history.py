@@ -2,6 +2,8 @@ from odoo import _, api, fields, models
 
 
 class HospitalDoctorHistory(models.Model):
+    """Keep history of personal doctor changes."""
+
     _name = 'hospital.doctor.history'
     _description = 'Personal doctor history'
     _order = 'assignment_date desc, id desc'
@@ -35,6 +37,7 @@ class HospitalDoctorHistory(models.Model):
 
     @api.onchange('assignment_date', 'doctor_change_date')
     def _onchange_doctor_change_date(self):
+        """Show warning if change date is before assignment date."""
         if self.assignment_date and self.doctor_change_date and self.doctor_change_date < self.assignment_date:
             return {
                 'warning': {
@@ -52,6 +55,7 @@ class HospitalDoctorHistory(models.Model):
         'assignment_date',
     )
     def _compute_display_name(self):
+        """Make name for history record from patient and doctor."""
         for record in self:
             patient_name = record.patient_id.name or ''
             doctor_name = record.doctor_id.name or ''
