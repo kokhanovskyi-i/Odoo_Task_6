@@ -1,6 +1,6 @@
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -14,9 +14,9 @@ class HrHospitalAppointment(models.Model):
 
     status = fields.Selection(
         selection=[
-            ('planned', 'Заплановано'),
-            ('done', 'Завершено'),
-            ('cancelled', 'Скасовано'),
+            ('planned', 'Planned'),
+            ('done', 'Done'),
+            ('cancelled', 'Cancelled'),
         ],
         string='Visit Status',
         default='planned',
@@ -74,12 +74,12 @@ class HrHospitalAppointment(models.Model):
         if protected_fields.intersection(vals):
             finished_appointments = self.filtered(lambda appointment: appointment.status == 'done')
             if finished_appointments:
-                raise UserError('You cannot change date, time or doctor for a completed visit.')
+                raise UserError(_('You cannot change date, time or doctor for a completed visit.'))
 
         if vals.get('active') is False:
             finished_appointments = self.filtered(lambda appointment: appointment.status == 'done')
             if finished_appointments:
-                raise UserError('You cannot archive completed visits.')
+                raise UserError(_('You cannot archive completed visits.'))
 
         return super().write(vals)
 
@@ -89,7 +89,7 @@ class HrHospitalAppointment(models.Model):
 
         finished_appointments = self.filtered(lambda appointment: appointment.status == "done")
         if finished_appointments:
-            raise UserError("You cannot delete completed visits.")
+            raise UserError('You cannot delete completed visits.')
 
         return super().unlink()
 
@@ -119,7 +119,7 @@ class HrHospitalAppointment(models.Model):
 
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Visits With Same Disease',
+            'name': _('Visits With Same Disease'),
             'res_model': 'hr.hospital.appointment',
             'view_mode': 'list,form',
             'domain': domain,

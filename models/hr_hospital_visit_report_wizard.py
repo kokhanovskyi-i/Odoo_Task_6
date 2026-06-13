@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime, time
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ class VisitReportWizard(models.TransientModel):
 
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Visit Report',
+            'name': _('Visit Report'),
             'res_model': 'hr.hospital.appointment',
             'view_mode': 'list,form',
             'domain': domain,
