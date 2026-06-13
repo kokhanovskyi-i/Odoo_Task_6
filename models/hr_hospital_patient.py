@@ -24,8 +24,8 @@ class HrHospitalPatient(models.Model):
     )
 
     user_id = fields.Many2one(
-        comodel_name="res.users",
-        string="System User",
+        comodel_name='res.users',
+        string='System User',
     )
 
     personal_doctor_id = fields.Many2one(
