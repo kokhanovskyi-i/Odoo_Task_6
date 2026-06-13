@@ -89,7 +89,7 @@ class HrHospitalAppointment(models.Model):
 
         finished_appointments = self.filtered(lambda appointment: appointment.status == "done")
         if finished_appointments:
-            raise UserError('You cannot delete completed visits.')
+            raise UserError(_('You cannot delete completed visits.'))
 
         return super().unlink()
 

@@ -1,6 +1,6 @@
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -50,7 +50,7 @@ class HrHospitalDisease(models.Model):
     def _check_parent_id(self):
         for disease in self:
             if disease._has_cycle():
-                raise ValidationError('Disease hierarchy cannot be recursive.')
+                raise ValidationError(_('Disease hierarchy cannot be recursive.'))
 
     @api.depends('name', 'parent_id.display_name')
     def _compute_display_name(self):
