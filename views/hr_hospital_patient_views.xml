@@ -54,6 +54,7 @@
                         <group string="Contacts">
                             <field name="email"/>
                             <field name="phone"/>
+                            <field name="user_id"/>
                             <field name="insurance_policy_number"/>
                         </group>
                     </group>
