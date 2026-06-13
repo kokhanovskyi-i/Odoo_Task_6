@@ -6,6 +6,8 @@ _logger = logging.getLogger(__name__)
 
 
 class HrHospitalPatient(models.Model):
+    """Keep patient data and personal doctor."""
+
     _name = 'hr.hospital.patient'
     _description = 'Hospital patient'
     _inherit = ['hospital.medic.info']
@@ -51,6 +53,7 @@ class HrHospitalPatient(models.Model):
 
     @api.depends()
     def _compute_appointment_count(self):
+        """Count visits of the patient."""
         for patient in self:
             patient.appointment_count = self.env['hr.hospital.appointment'].search_count(
                 [
@@ -59,6 +62,7 @@ class HrHospitalPatient(models.Model):
             )
 
     def action_view_appointments(self):
+        """Open visits of this patient."""
         self.ensure_one()
 
         return {
@@ -74,6 +78,7 @@ class HrHospitalPatient(models.Model):
         }
 
     def action_create_appointment(self):
+        """Open new visit form with this patient already filled."""
         self.ensure_one()
 
         return {

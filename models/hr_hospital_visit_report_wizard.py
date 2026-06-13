@@ -7,6 +7,8 @@ _logger = logging.getLogger(__name__)
 
 
 class VisitReportWizard(models.TransientModel):
+    """Wizard for visit report filters."""
+
     _name = 'visit.report.wizard'
     _description = 'Visit report wizard'
 
@@ -39,6 +41,7 @@ class VisitReportWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
+        """Fill patients or doctors from selected records."""
         res = super().default_get(fields_list)
 
         active_model = self.env.context.get('active_model')
@@ -53,6 +56,7 @@ class VisitReportWizard(models.TransientModel):
         return res
 
     def action_show_visits(self):
+        """Open visits by selected filter values."""
         self.ensure_one()
 
         domain = []

@@ -7,6 +7,8 @@ _logger = logging.getLogger(__name__)
 
 
 class HrHospitalAppointment(models.Model):
+    """Keep visit records for patients and doctors."""
+
     _name = 'hr.hospital.appointment'
     _description = 'Hospital appointment'
     _rec_name = 'planned_datetime'
@@ -65,6 +67,7 @@ class HrHospitalAppointment(models.Model):
     )
 
     def write(self, vals):
+        """Stop changes that are not allowed for completed visits."""
         protected_fields = {
             'planned_datetime',
             'visit_datetime',
@@ -84,6 +87,7 @@ class HrHospitalAppointment(models.Model):
         return super().write(vals)
 
     def unlink(self):
+        """Do not delete completed visits, except for hospital admin."""
         if self.env.user.has_group('hr_hospital.group_hr_hospital_admin'):
             return super().unlink()
 
@@ -95,6 +99,7 @@ class HrHospitalAppointment(models.Model):
 
     @api.depends('disease_id')
     def _compute_same_disease_visit_count(self):
+        """Count visits with the same disease."""
         for appointment in self:
             if appointment.disease_id:
                 appointment.same_disease_visit_count = self.search_count(
@@ -106,6 +111,7 @@ class HrHospitalAppointment(models.Model):
                 appointment.same_disease_visit_count = 0
 
     def action_view_same_disease_visits(self):
+        """Open visits with the same disease as current visit."""
         self.ensure_one()
 
         domain = [('id', '=', False)]

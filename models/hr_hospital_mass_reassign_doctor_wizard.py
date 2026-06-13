@@ -6,6 +6,8 @@ _logger = logging.getLogger(__name__)
 
 
 class MassReassignDoctorWizard(models.TransientModel):
+    """Wizard to change personal doctor for many patients."""
+
     _name = 'mass.reassign.doctor.wizard'
     _description = 'Mass reassign doctor wizard'
 
@@ -21,6 +23,7 @@ class MassReassignDoctorWizard(models.TransientModel):
     )
 
     def action_reassign_doctor(self):
+        """Set new doctor and add history lines."""
         patients = self.env['hr.hospital.patient'].browse(self.env.context.get('active_ids', []))
 
         for wizard in self:

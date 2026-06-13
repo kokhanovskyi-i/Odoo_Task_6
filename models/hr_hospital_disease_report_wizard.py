@@ -7,6 +7,8 @@ from odoo.exceptions import ValidationError
 
 
 class HrHospitalDiseaseReportWizard(models.TransientModel):
+    """Wizard for report by diseases and visits."""
+
     _name = 'disease.report.wizard'
     _description = 'Disease Report Wizard'
 
@@ -34,6 +36,7 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
+        """Fill doctors automatically when wizard is opened from doctors."""
         result = super().default_get(fields_list)
 
         if self.env.context.get('active_model') == 'hr.hospital.doctor':
@@ -45,11 +48,13 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
 
     @api.constrains('date_from', 'date_to')
     def _check_dates(self):
+        """Check that start date is not after end date."""
         for wizard in self:
             if wizard.date_from and wizard.date_to and wizard.date_from > wizard.date_to:
                 raise ValidationError(_('Date From cannot be later than Date To.'))
 
     def action_show_report(self):
+        """Open visits by selected doctors, diseases and dates."""
         self.ensure_one()
 
         domain = []

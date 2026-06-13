@@ -4,6 +4,8 @@ from odoo import api, fields, models
 
 
 class HospitalMedicInfo(models.AbstractModel):
+    """Common medical fields for doctors and patients."""
+
     _name = 'hospital.medic.info'
     _description = 'Medical information'
 
@@ -40,6 +42,7 @@ class HospitalMedicInfo(models.AbstractModel):
 
     @api.depends('birth_date')
     def _compute_age(self):
+        """Calculate age from birth date."""
         today = fields.Date.today()
 
         for record in self:
