@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class HospitalDoctorHistory(models.Model):
@@ -38,8 +38,8 @@ class HospitalDoctorHistory(models.Model):
         if self.assignment_date and self.doctor_change_date and self.doctor_change_date < self.assignment_date:
             return {
                 'warning': {
-                    'title': 'Warning',
-                    'message': 'Дата зміни лікаря не може бути раніше ніж дата призначення',
+                    'title': _('Warning'),
+                    'message': _('Doctor change date cannot be earlier than assignment date.'),
                 }
             }
 

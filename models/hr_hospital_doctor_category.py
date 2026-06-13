@@ -9,6 +9,7 @@ class HospitalDoctorCategory(models.Model):
     name = fields.Char(
         string='Name',
         required=True,
+        translate=True,
     )
 
     sequence = fields.Integer(

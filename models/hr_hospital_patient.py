@@ -1,6 +1,6 @@
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -63,7 +63,7 @@ class HrHospitalPatient(models.Model):
 
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Patient Visits',
+            'name': _('Patient Visits'),
             'res_model': 'hr.hospital.appointment',
             'view_mode': 'list,form,calendar,pivot,graph',
             'domain': [('patient_id', '=', self.id)],
@@ -78,7 +78,7 @@ class HrHospitalPatient(models.Model):
 
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Create Visit',
+            'name': _('Create Visit'),
             'res_model': 'hr.hospital.appointment',
             'view_mode': 'form',
             'target': 'current',

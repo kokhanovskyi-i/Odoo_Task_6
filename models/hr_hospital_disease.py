@@ -21,6 +21,7 @@ class HrHospitalDisease(models.Model):
     name = fields.Char(
         string='Name',
         required=True,
+        translate=True,
     )
 
     display_name = fields.Char(

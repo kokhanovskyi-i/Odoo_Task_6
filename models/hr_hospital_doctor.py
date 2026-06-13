@@ -1,6 +1,6 @@
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -86,14 +86,14 @@ class HrHospitalDoctor(models.Model):
     def _check_mentor_is_not_intern(self):
         for doctor in self:
             if doctor.mentor_id and doctor.mentor_id.is_intern:
-                raise ValidationError('Mentor cannot be an intern.')
+                raise ValidationError(_('Mentor cannot be an intern.'))
 
     def action_create_appointment(self):
         self.ensure_one()
 
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Create Visit',
+            'name': _('Create Visit'),
             'res_model': 'hr.hospital.appointment',
             'view_mode': 'form',
             'target': 'current',

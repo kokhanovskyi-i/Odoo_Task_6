@@ -2,7 +2,7 @@ from datetime import datetime, time
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -47,7 +47,7 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
     def _check_dates(self):
         for wizard in self:
             if wizard.date_from and wizard.date_to and wizard.date_from > wizard.date_to:
-                raise ValidationError('Date From cannot be later than Date To.')
+                raise ValidationError(_('Date From cannot be later than Date To.'))
 
     def action_show_report(self):
         self.ensure_one()
@@ -70,7 +70,7 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
 
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Disease Report',
+            'name': _('Disease Report'),
             'res_model': 'hr.hospital.appointment',
             'view_mode': 'list,form',
             'domain': domain,
